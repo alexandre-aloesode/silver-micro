@@ -143,6 +143,7 @@ class API_Helper
             {
                 if ($this->checkParameter($params[$value[0]], $value) == false)
                 {
+                    // var_dump($params[$value[0]]);
                     return (false);
                 }
                 $clean_params[$value[0]] = $params[$value[0]];
@@ -151,6 +152,7 @@ class API_Helper
             {
                   if ($value[1] == "mandatory")
                 {
+                    // var_dump("error on mandatory ".$value[0]);
                     return (false);
                 }
             }
@@ -203,8 +205,8 @@ class API_Helper
             }
             else
             {
-                if ($this->checkType($param, $expected_type) == false)
-                    return (false);
+                if ($this->checkType($param, $expected_type) == false) 
+                return (false);
             }
         }
         else if ($type == "array")

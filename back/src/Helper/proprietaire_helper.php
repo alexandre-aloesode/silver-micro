@@ -1,7 +1,8 @@
 <?php
 namespace App\Helper;
 
-class Restaurant_Helper {
+class Proprietaire_Helper {
+
     public function __construct()
     {
     
@@ -10,11 +11,11 @@ class Restaurant_Helper {
     public function Access($call, $payload, &$params)
     {
         $granted = [
-            'postRestaurant',
+            'getRestaurant',
         ];
 
         $limited = [
-            
+            'postRestaurant',
         ];
 
         if (in_array($call, $granted)) {
@@ -26,5 +27,11 @@ class Restaurant_Helper {
         }
 
         return (false);
+    }
+
+    private function postRestaurant($payload, &$params)
+    {
+        $params['id_user'] = (string)$payload->id;
+        return ($params);
     }
 }

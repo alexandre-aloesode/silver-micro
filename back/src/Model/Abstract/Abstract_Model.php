@@ -4,7 +4,6 @@ namespace App\Model\Abstract;
 
 require_once '/var/www/html/silver-micro/back/constants.php';
 use APP\Helper\Status_Helper;
-require_once '/var/www/html/silver-micro/back/src/helpers/status_helper.php';
 
 abstract class Abstract_Model
 {
@@ -249,10 +248,12 @@ abstract class Abstract_Model
             $sql = "SELECT * FROM " . $this->tableName;
         } else {
             foreach ($params as $key => $value) {
-                if (in_array($key, $fields)) {
-                    $selectedFields[] = $key;
-                    if ($value != '') {
-                        $where[] = $key . ' = :' . $key;
+                foreach($fields as $field) {                   
+                    if ($key == $field['alias']) {
+                        $selectedFields[] = $this->tableName . '.' . $field['field'] . ' AS ' . $field['alias'];
+                        if ($value != '') {
+                            $where[] = $field['field'] . ' =' . $value;
+                        }
                     }
                 }
             }
@@ -269,10 +270,10 @@ abstract class Abstract_Model
         $fields = [];
         $values = [];
         foreach ($params as $key => $value) {
-            if ($value != '') {
+            // if ($value != '') {
                 $fields[] = $key;
                 $values[] = ':' . $key;
-            }
+            // }
         }
         $fields = implode(', ', $fields);
         $values = implode(', ', $values);

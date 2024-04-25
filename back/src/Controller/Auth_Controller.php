@@ -1,12 +1,10 @@
 <?php
 
 namespace App\Controller;
-require_once 'vendor/autoload.php';
+// require_once 'vendor/autoload.php';
 use App\Model\User_Model;
 use App\Helper\Token_Helper;
-
-require_once '/var/www/html/silver-micro/back/src/model/User_Model.php';
-require_once '/var/www/html/silver-micro/back/src/helpers/token_helper.php';
+require_once '/var/www/html/silver-micro/back/src/Helper/token_helper.php';
 
 class Auth_Controller
 {

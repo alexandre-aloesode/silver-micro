@@ -3,7 +3,6 @@
 namespace App\Model;
 
 use App\Model\Abstract\Abstract_Model;
-require_once '/var/www/html/silver-micro/back/src/model/Abstract/Abstract_Model.php';
 
 class User_Model extends Abstract_Model
 {

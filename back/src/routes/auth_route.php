@@ -1,7 +1,6 @@
 <?php
 
 use App\Controller\Auth_Controller;
-require_once '/var/www/html/silver-micro/back/src/controller/Auth_Controller.php';
 
 $router->map('POST', '/login', function () {
     $user = new Auth_Controller($_POST);

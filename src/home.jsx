@@ -10,18 +10,15 @@ export default function Home() {
   const [userRole, setUserRole] = useState("");
   const [userData, setUserData] = useState({});//[user, setUser
   const { user } = useContext(UserContext);
-  console.log(user);
 
   useEffect(() => {
     setUserRole(user?.role);
   }, [user]);
 
-  console.log(userRole);
-//   console.log(user);
   return (
-    <div id="divtest">
+    <div>
       {userRole == "client" && <ClientHome />}
-      {userRole == "restaurant" && <ManagerHome />}
+      {userRole == "proprietaire" && <ManagerHome />}
       {userRole == "admin" && <AdminHome />}
       {/* {user?.role === "client" ? <ClientHome /> : user?.role === "manager" ?
        <ManagerHome /> : user?.role === "admin" ? <AdminHome /> : null} */}

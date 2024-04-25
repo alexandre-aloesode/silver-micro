@@ -1,4 +1,18 @@
+import { Form } from "react-router-dom";
+
 const url = window.location.hostname === "localhost" ? "http://localhost/silver-micro/back/" : "";
+
+function buildUrl(params) {
+  let url = "";
+  Object.keys(params).forEach((key, index) => {
+    if (index === 0) {
+      url += `${key}=${params[key]}`;
+    } else {
+      url += `&${key}=${params[key]}`;
+    }
+  });
+  return url;
+}
 
 const dbLogin = async (data) => {
   const response = await fetch(url + "login", {
@@ -8,11 +22,18 @@ const dbLogin = async (data) => {
   return await response.json();
 };
 
-const dbGet = async (route) => {
-  const response = await fetch(url + route, {
-    headers: {
-      token: localStorage.getItem("token"),
-    },
+const dbGet = async (payload) => {
+  const params = new FormData();
+  params.append("method", "GET");
+  params.append("token", localStorage.getItem("token"));
+  if (payload.params) {
+    Object.keys(payload.params).forEach((key) => {
+      params.append(key, payload.params[key]);
+    });
+  }
+  const response = await fetch(url + payload.route, {
+    method: "POST",
+    body: params,
   });
   return await response.json();
 };
