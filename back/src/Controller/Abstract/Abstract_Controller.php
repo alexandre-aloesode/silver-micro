@@ -13,11 +13,11 @@ require_once '/var/www/html/silver-micro/back/src/Helper/api_helper.php';
 
 abstract class Abstract_Controller
 {
-    public bool $is_verified;
-    public $helper;
-    public $model;
-    public $payload;
-    public $status_helper;
+    protected bool $is_verified;
+    protected $helper;
+    protected $model;
+    protected $payload;
+    protected $status_helper;
 
     public function __construct()
     {

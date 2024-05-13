@@ -6,20 +6,20 @@ use App\Model\Abstract\Abstract_Model;
 use APP\Helper\API_Helper;
 use APP\Helper\Status_Helper;
 
-class Type_Model extends Abstract_Model
+class Hour_Model extends Abstract_Model
 {
     public function __construct()
     {
         parent::connect();
-        $this->api_helper = new API_Helper('silver-micro', 'type');
+        $this->api_helper = new API_Helper('silver-micro', 'hour');
         $this->status_helper = new Status_Helper();
-        $this->tableName = 'type';
+        $this->tableName = 'hour';
     }
 
-    public function postType($params)
+    public function postHour($params)
     {
         $constraints = [
-        ['name', 'mandatory', 'string'],
+        ['hour', 'mandatory', 'string'],
         ];
         if ($this->api_helper->checkParameters($params, $constraints) == false) {
             return ($this->status_helper->PreconditionFailed());
@@ -27,7 +27,7 @@ class Type_Model extends Abstract_Model
 
         // $this->db->trans_start();
         $data = [
-            'name' => $params['name'],
+            'time' => $params['time'],
         ];
 
         $pdo = self::getPdo();
@@ -37,15 +37,14 @@ class Type_Model extends Abstract_Model
         return ($response === true ? $pdo->lastInsertId() : false);
     }
 
-    public function getType($params) {
+    public function getHour($params) {
 
         $constraints = [
-            ['type_id', 'optional', 'number'], ['type_name', 'optional', 'string'],
+            ['hour_id', 'optional', 'number'], ['hour_time', 'optional', 'string'],
         ];
         if ($this->api_helper->checkParameters($params, $constraints) == false)
         { return ($this->status_helper->PreconditionFailed()); }
-
-        $fields = $this->getTypeFields();
+        $fields = $this->getHourFields();
         $sql = $this->buildGet($fields, $params);
         $pdo = self::getPdo();
         $request = $pdo->prepare($sql);
@@ -53,19 +52,19 @@ class Type_Model extends Abstract_Model
         return ($request->fetchAll(\PDO::FETCH_ASSOC));    
     }
 
-    private function getTypeFields()
+    private function getHourFields()
     {
         return ([
-			'type_id' => [
+			'hour_id' => [
                 'type' => 'in',
                 'field' =>'id',
-                'alias' => 'type_id',
+                'alias' => 'hour_id',
                 'filter' => 'where'
             ],
-            'type_name' => [
+            'hour_time' => [
                 'type' => 'in',
-                'field' => 'name',
-                'alias' => 'type_name',
+                'field' => 'time',
+                'alias' => 'hour_time',
                 'filter' => 'where'
             ],
         ]);

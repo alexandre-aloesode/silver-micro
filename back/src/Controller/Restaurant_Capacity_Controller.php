@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Controller\Abstract\Abstract_Controller;
-use App\Model\Restaurant_Type_Model;
+use App\Model\Restaurant_Capacity_Model;
 
-class Restaurant_Type_Controller extends Abstract_Controller
+class Restaurant_Capacity_Controller extends Abstract_Controller
 {
 
     public function __construct()
@@ -16,9 +16,9 @@ class Restaurant_Type_Controller extends Abstract_Controller
         }
     }
 
-    public function postRestaurantType($params)
+    public function postRestaurantCapacity($params)
     {
-        $access_params = $this->helper->Access('postRestaurantType', $this->payload, $params);
+        $access_params = $this->helper->Access('postRestaurantCapacity', $this->payload, $params);
         if (!$access_params) {
             echo json_encode($this->status_helper->Forbidden());
             return;
@@ -26,12 +26,12 @@ class Restaurant_Type_Controller extends Abstract_Controller
         else {
             unset($access_params['token']);
             unset($access_params['method']);
-            $this->model = new Restaurant_Type_Model();
+            $this->model = new Restaurant_Capacity_Model();
         }
     }
 
-    public function getRestaurantType($params) {
-        $access_params = $this->helper->Access('getRestaurantType', $this->payload, $params);
+    public function getRestaurantCapacity($params) {
+        $access_params = $this->helper->Access('getRestaurantCapacity', $this->payload, $params);
         if (!$access_params) {
             echo json_encode($this->status_helper->Forbidden());
             return;
@@ -39,8 +39,8 @@ class Restaurant_Type_Controller extends Abstract_Controller
         else {
             unset($access_params['token']);
             unset($access_params['method']);
-            $this->model = new Restaurant_Type_Model();
-            echo json_encode($this->model->getRestaurantType($access_params));
+            $this->model = new Restaurant_Capacity_Model();
+            echo json_encode($this->model->getRestaurantCapacity($access_params));
         }
     }
 }

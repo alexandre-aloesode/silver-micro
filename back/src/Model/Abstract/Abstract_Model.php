@@ -3,6 +3,7 @@
 namespace App\Model\Abstract;
 
 require_once '/var/www/html/silver-micro/back/constants.php';
+
 use APP\Helper\Status_Helper;
 
 abstract class Abstract_Model
@@ -108,12 +109,10 @@ abstract class Abstract_Model
 
     public function readOnebyForeignKey(string $foreignKey, int $keyValue, $order): array
     {
-        if($order == "void") {
-            
-            $requestReadOne = "SELECT * FROM $this->tableName WHERE $foreignKey = :$foreignKey";
-        }
+        if ($order == "void") {
 
-        else {
+            $requestReadOne = "SELECT * FROM $this->tableName WHERE $foreignKey = :$foreignKey";
+        } else {
 
             $requestReadOne = "SELECT * FROM $this->tableName WHERE $foreignKey = :$foreignKey ORDER BY $order";
         }
@@ -243,36 +242,51 @@ abstract class Abstract_Model
     public function buildGet($fields, $params)
     {
         $selectedFields = [];
+        $innerJoin = [];
         $where = [];
         if (count($params) == 0) {
             $sql = "SELECT * FROM " . $this->tableName;
         } else {
             foreach ($params as $key => $value) {
-                foreach($fields as $field) {                   
+                foreach ($fields as $field) {
                     if ($key == $field['alias']) {
-                        $selectedFields[] = $this->tableName . '.' . $field['field'] . ' AS ' . $field['alias'];
+                        if ($field['type'] == 'out') {
+                            foreach ($field['link'] as $link) {
+                                $innerJoin[] = $link['right'][0] . ' ON ' . $link['left'][0] . '.' . $link['left'][1] . ' = ' . $link['right'][0] . '.' . $link['right'][1];
+                            }
+                            $selectedFields[] = $field['link'][count($field['link']) - 1]['right'][0] . '.' . $field['field'] . ' AS ' . $field['alias'];
+                        } else {
+                            $selectedFields[] = $this->tableName . '.' . $field['field'] . ' AS ' . $field['alias'];
+                        }
                         if ($value != '') {
-                            $where[] = $field['field'] . ' =' . $value;
+                            $where[] = $this->tableName . '.' . $field['field'] . ' = ' . $value;
                         }
                     }
                 }
             }
             $where = implode(' AND ', $where);
-            $sql = $where == '' ?
-                "SELECT " . implode(', ', $selectedFields) . " FROM " . $this->tableName
-                :
-                "SELECT " . implode(', ', $selectedFields) . " FROM " . $this->tableName . " WHERE " . $where;
+            $sql = "SELECT " . implode(', ', $selectedFields) . " FROM " . $this->tableName;
+            if (count($innerJoin) > 0) {
+                $sql .= ' INNER JOIN ' . implode(' INNER JOIN ', $innerJoin);
+            }
+            if ($where != '') {
+                $sql .= ' WHERE ' . $where;
+            }
+            if (isset($params['order'])) {
+                $sql .= ' ORDER BY ' . $params['order'];
+            }
         }
         return $sql;
     }
 
-    public function buildPost($params) {
+    public function buildPost($params)
+    {
         $fields = [];
         $values = [];
         foreach ($params as $key => $value) {
             // if ($value != '') {
-                $fields[] = $key;
-                $values[] = ':' . $key;
+            $fields[] = $key;
+            $values[] = ':' . $key;
             // }
         }
         $fields = implode(', ', $fields);
@@ -281,22 +295,33 @@ abstract class Abstract_Model
         return $sql;
     }
 
-    public function buildPut($fields, $params) {
+    public function buildPut($fields)
+    {
         $set = [];
         $where = [];
-        foreach ($params as $key => $value) {
-            if (in_array($key, $fields)) {
-                if ($value != '') {
-                    $set[] = $key . ' = :' . $key;
-                }
-                else {
-                    $where[] = $key . ' = :' . $key;
-                }
+        foreach ($fields as $key => $value) {
+            if ($key != 'id') {
+                $set[] = $key . ' = :' . $key;
+            } else {
+                $where[] = $key . ' = :' . $key;
             }
         }
         $set = implode(', ', $set);
         $where = implode(' AND ', $where);
         $sql = "UPDATE " . $this->tableName . " SET " . $set . " WHERE " . $where;
+        return $sql;
+    }
+
+    public function buildDelete($params)
+    {
+        $where = [];
+        foreach ($params as $key => $value) {
+            if ($value != '') {
+                $where[] = $key . ' = :' . $key;
+            }
+        }
+        $where = implode(' AND ', $where);
+        $sql = "DELETE FROM " . $this->tableName . " WHERE " . $where;
         return $sql;
     }
 

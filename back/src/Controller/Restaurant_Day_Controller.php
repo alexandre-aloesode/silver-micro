@@ -3,9 +3,9 @@
 namespace App\Controller;
 
 use App\Controller\Abstract\Abstract_Controller;
-use App\Model\Restaurant_Type_Model;
+use App\Model\Restaurant_Day_Model;
 
-class Restaurant_Type_Controller extends Abstract_Controller
+class Restaurant_Day_Controller extends Abstract_Controller
 {
 
     public function __construct()
@@ -16,9 +16,9 @@ class Restaurant_Type_Controller extends Abstract_Controller
         }
     }
 
-    public function postRestaurantType($params)
+    public function postRestaurantDay($params)
     {
-        $access_params = $this->helper->Access('postRestaurantType', $this->payload, $params);
+        $access_params = $this->helper->Access('postRestaurantDay', $this->payload, $params);
         if (!$access_params) {
             echo json_encode($this->status_helper->Forbidden());
             return;
@@ -26,12 +26,12 @@ class Restaurant_Type_Controller extends Abstract_Controller
         else {
             unset($access_params['token']);
             unset($access_params['method']);
-            $this->model = new Restaurant_Type_Model();
+            $this->model = new Restaurant_Day_Model();
         }
     }
 
-    public function getRestaurantType($params) {
-        $access_params = $this->helper->Access('getRestaurantType', $this->payload, $params);
+    public function getRestaurantDay($params) {
+        $access_params = $this->helper->Access('getRestaurantDay', $this->payload, $params);
         if (!$access_params) {
             echo json_encode($this->status_helper->Forbidden());
             return;
@@ -39,8 +39,8 @@ class Restaurant_Type_Controller extends Abstract_Controller
         else {
             unset($access_params['token']);
             unset($access_params['method']);
-            $this->model = new Restaurant_Type_Model();
-            echo json_encode($this->model->getRestaurantType($access_params));
+            $this->model = new Restaurant_Day_Model();
+            echo json_encode($this->model->getRestaurantDay($access_params));
         }
     }
 }

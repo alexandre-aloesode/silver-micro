@@ -28,7 +28,7 @@ function NavBar() {
         }}
       >
         <button onClick={() => (window.location.href = "/")}>Home</button>
-        <button onClick={() => (window.location.href = "/products")}>Products</button>
+        {/* <button onClick={() => (window.location.href = "/products")}>Products</button> */}
         {isAuthenticated ? (
           <div>
             <PersonIcon />
@@ -41,7 +41,7 @@ function NavBar() {
           </div>
         )}
       </div>
-      <div>
+      {/* <div>
         <TextField
           value={userSearch}
           onChange={(e) => {
@@ -58,7 +58,7 @@ function NavBar() {
             window.location.href = `/search/${userSearch}`;
           }}
         />
-      </div>
+      </div> */}
     </div>
   );
 }

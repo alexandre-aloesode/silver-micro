@@ -44,6 +44,26 @@ const dbPost = async (route, data) => {
   const response = await fetch(url + route, {
     method: "POST",
     body: data,
+  });
+  return await response.json();
+};
+
+const dbPut = async (route, data) => {
+  data.append("method", "PUT");
+  data.append("token", localStorage.getItem("token"));
+  const response = await fetch(url + route, {
+    method: "POST",
+    body: data,
+  });
+  return await response.json();
+};
+
+const dbDelete = async (route, data) => {
+  data.append("method", "DELETE");
+  data.append("token", localStorage.getItem("token"));
+  const response = await fetch(url + route, {
+    method: "POST",
+    body: data,
     // headers: {
     //   token: localStorage.getItem("token"),
     // },
@@ -51,27 +71,4 @@ const dbPost = async (route, data) => {
   return await response.json();
 };
 
-const dbPut = async (route, data) => {
-  data.append("method", "PUT");
-  const response = await fetch(url + route, {
-    method: "POST",
-    body: data,
-    headers: {
-      token: localStorage.getItem("token"),
-    },
-  });
-  return await response.json();
-};
-
-const dbDel = async (route, data) => {
-  data.append("method", "DELETE");
-  const response = await fetch(url + route, {
-    method: "POST",
-    body: data,
-    headers: {
-      token: localStorage.getItem("token"),
-    },
-  });
-};
-
-export { dbLogin, dbGet, dbPost, dbPut, dbDel };
+export { dbLogin, dbGet, dbPost, dbPut, dbDelete };

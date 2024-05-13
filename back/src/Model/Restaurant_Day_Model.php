@@ -6,20 +6,20 @@ use App\Model\Abstract\Abstract_Model;
 use APP\Helper\API_Helper;
 use APP\Helper\Status_Helper;
 
-class Type_Model extends Abstract_Model
+class Restaurant_Day_Model extends Abstract_Model
 {
     public function __construct()
     {
         parent::connect();
-        $this->api_helper = new API_Helper('silver-micro', 'type');
+        $this->api_helper = new API_Helper('silver-micro', 'restaurant_day');
         $this->status_helper = new Status_Helper();
-        $this->tableName = 'type';
+        $this->tableName = 'restaurant_day';
     }
 
-    public function postType($params)
+    public function postRestaurantDay($params)
     {
         $constraints = [
-        ['name', 'mandatory', 'string'],
+            ['restaurant_id', 'mandatory', 'number'], ['day_id', 'mandatory', 'number'],
         ];
         if ($this->api_helper->checkParameters($params, $constraints) == false) {
             return ($this->status_helper->PreconditionFailed());
@@ -27,7 +27,8 @@ class Type_Model extends Abstract_Model
 
         // $this->db->trans_start();
         $data = [
-            'name' => $params['name'],
+            'restaurant_id' => $params['restaurant_id'],
+            'day_id' => $params['day_id'],
         ];
 
         $pdo = self::getPdo();
@@ -37,15 +38,15 @@ class Type_Model extends Abstract_Model
         return ($response === true ? $pdo->lastInsertId() : false);
     }
 
-    public function getType($params) {
+    public function getRestaurantDay($params) {
 
         $constraints = [
-            ['type_id', 'optional', 'number'], ['type_name', 'optional', 'string'],
+            ['restaurant_day_id', 'optional', 'number'], ['restaurant_id', 'optional', 'number'], ['day_id', 'optional', 'number'],
         ];
         if ($this->api_helper->checkParameters($params, $constraints) == false)
         { return ($this->status_helper->PreconditionFailed()); }
 
-        $fields = $this->getTypeFields();
+        $fields = $this->getRestaurantDayFields();
         $sql = $this->buildGet($fields, $params);
         $pdo = self::getPdo();
         $request = $pdo->prepare($sql);
@@ -53,19 +54,25 @@ class Type_Model extends Abstract_Model
         return ($request->fetchAll(\PDO::FETCH_ASSOC));    
     }
 
-    private function getTypeFields()
+    private function getRestaurantDayFields()
     {
         return ([
-			'type_id' => [
+            'restaurant_day_id' => [
                 'type' => 'in',
                 'field' =>'id',
-                'alias' => 'type_id',
+                'alias' => 'restaurant_day_id',
                 'filter' => 'where'
             ],
-            'type_name' => [
+			'day_id' => [
                 'type' => 'in',
-                'field' => 'name',
-                'alias' => 'type_name',
+                'field' =>'day_id',
+                'alias' => 'day_id',
+                'filter' => 'where'
+            ],
+            'restaurant_id' => [
+                'type' => 'in',
+                'field' => 'restaurant_id',
+                'alias' => 'restaurant_id',
                 'filter' => 'where'
             ],
         ]);
