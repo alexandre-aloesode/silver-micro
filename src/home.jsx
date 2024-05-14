@@ -16,7 +16,15 @@ export default function Home() {
   }, [user]);
 
   return (
-    <div>
+    <div
+    style={{
+      display: "flex",
+      width: "100%",
+      height: "100%",
+      margin: 0,
+      overflow: "auto",
+    }}
+    >
       {userRole == "client" && <ClientHome />}
       {userRole == "proprietaire" && <ManagerHome />}
       {userRole == "admin" && <AdminHome />}

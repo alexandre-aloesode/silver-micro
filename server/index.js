@@ -12,7 +12,13 @@ const multer = require("multer");
 var storage = multer.diskStorage({
   destination: "./restaurant_images",
   filename: function (req, file, cb) {
-    cb(null, file.originalname);
+    //How can i console.log the params sent from the axios.post
+    console.log("pppppp", req.headers.newfilename);
+    // // console.log("ffffffff", req);
+    // console.log("yyyyyy", req.body);
+    // console.log("ggggggg", cb);
+    // console.log("tttttttt", file);
+    cb(null, req.headers.newfilename);
   },
 });
 
@@ -31,11 +37,12 @@ app.use(cors(corsOptions));
 
 
 // route for file upload
-app.post("/api/uploadfile", upload.single("myFile"), (req, res, next) => {  
-  console.log(req.file.originalname + " file successfully uploaded !!");
+app.post("/api/uploadfile", upload.single("myFile"), (req, res, next) => {
+  // console.log("rrrrrrr", req.file);
+  console.log(req.headers.newfilename + " file successfully uploaded !!");
   res.sendStatus(200);
   //I need to send the name of the file as a response
-  res.send(req.file.originalname);
+  // res.send(req.file.originalname);
 });
 
 app.listen(3000, () => console.log("Listening on port 3000"));

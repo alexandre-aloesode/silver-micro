@@ -10,14 +10,19 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <UserContextProvider>
       <div
         style={{
-          display: "flex",
+          display: "flex",  
           flexDirection: "column",
-          width: "100vw",
+          justifyContent: "space-between",
+          width: "100%",
+          height: "100%",
           gap: "10px",
+          margin: 0,
+          // overflow: "hidden",
+          // border: "1px solid red",
         }}
       >
-        <NavBar />
         <AppRouterProvider />
+        <NavBar />
       </div>
     </UserContextProvider>
   </React.StrictMode>

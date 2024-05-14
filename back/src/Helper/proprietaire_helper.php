@@ -25,6 +25,10 @@ class Proprietaire_Helper {
             'postRestaurant',
             'putRestaurant',
 
+            'postRestaurantImage',
+            'getRestaurantImage',
+            // 'putRestaurantImage',
+
             'getRestaurantSchedule',
             'postRestaurantSchedule',
             'deleteRestaurantSchedule'
@@ -41,6 +45,8 @@ class Proprietaire_Helper {
         return (false);
     }
 
+
+    // META
     private function isRestaurantInScope($payload, $params)
     {
         if (!isset($params['restaurant_id'])) {
@@ -58,6 +64,8 @@ class Proprietaire_Helper {
         }
         return (false);
     }
+
+    //RESTAURANT
 
     private function getRestaurant($payload, &$params)
     {
@@ -79,6 +87,25 @@ class Proprietaire_Helper {
         return ($this->isRestaurantInScope($payload, $params));
     }
 
+
+    //RESTAURANT IMAGE
+    private function getRestaurantImage($payload, &$params)
+    {
+        if (!isset($params['restaurant_id'])) {
+            return (false);
+        }
+        return ($this->isRestaurantInScope($payload, $params));
+    }
+
+    private function postRestaurantImage($payload, &$params)
+    {
+        if (!isset($params['restaurant_id'])) {
+            return (false);
+        }
+        return ($this->isRestaurantInScope($payload, $params));
+    }
+
+    //RESTAURANT SCHEDULE
     private function getRestaurantSchedule($payload, &$params)
     {
         if(!isset($params['restaurant_id']))

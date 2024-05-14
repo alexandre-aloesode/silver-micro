@@ -3,25 +3,25 @@ import { UserContext } from "../context/userContext";
 import { AppRouterProvider } from "../context/router";
 import PersonIcon from "@mui/icons-material/Person";
 import LogoutIcon from "@mui/icons-material/Logout";
-import TextField from "@mui/material/TextField";
-import SearchIcon from "@mui/icons-material/Search";
 
 function NavBar() {
   const router = AppRouterProvider();
   const { isAuthenticated, logout } = useContext(UserContext);
-  const [userSearch, setUserSearch] = useState("");
 
   return (
     <div
       style={{
         display: "flex",
         flexDirection: "column",
+        width: "100%",
+        margin: 0,
+        padding: 0,
       }}
     >
       <div
         style={{
           display: "flex",
-          padding: "10px",
+          justifyContent: "space-between",
           backgroundColor: "lightgray",
           width: "100%",
           gap: "10px",
@@ -41,24 +41,6 @@ function NavBar() {
           </div>
         )}
       </div>
-      {/* <div>
-        <TextField
-          value={userSearch}
-          onChange={(e) => {
-            setUserSearch(e.target.value);
-          }}
-          onKeyUp={(e) => {
-            if (e.key === "Enter") {
-              window.location.href = `/search/${userSearch}`;
-            }
-          }}
-        />
-        <SearchIcon
-          onClick={() => {
-            window.location.href = `/search/${userSearch}`;
-          }}
-        />
-      </div> */}
     </div>
   );
 }

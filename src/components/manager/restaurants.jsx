@@ -11,7 +11,7 @@ import ManageImages from "./manageImages";
 import { dbGet } from "../../api/database";
 import InfoIcon from "@mui/icons-material/Info";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import ImageIcon from '@mui/icons-material/Image';
+import ImageIcon from "@mui/icons-material/Image";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 export default function restaurants() {
@@ -37,8 +37,22 @@ export default function restaurants() {
   return (
     <div>
       {/* {restaurants.length > 1 && ( */}
-      <div>
-        <FormControl>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%",
+          marginTop:10,
+          marginBottom:10
+        }}
+      >
+        <FormControl
+          sx={{
+            // width: "100%",
+          }}
+        >
           <InputLabel id="inputCat">Restaurant</InputLabel>
           <Select
             labelId="inputCat"
@@ -58,12 +72,24 @@ export default function restaurants() {
             ))}
           </Select>
         </FormControl>
-        <AddCircleIcon onClick={() => setAddNewRestaurant(true)} />
         {/* )} */}
       </div>
 
       {!addNewRestaurant && (
-        <div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "25px",
+            width: "50%",
+            position: "absolute",
+            bottom: "7px",
+            left:"25%"
+          }}
+        >
+          <AddCircleIcon onClick={() => setAddNewRestaurant(true)} />
           <InfoIcon onClick={() => setView(1)} />
           <CalendarMonthIcon onClick={() => setView(2)} />
           <ImageIcon onClick={() => setView(3)} />

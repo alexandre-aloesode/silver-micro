@@ -106,7 +106,18 @@ export default function ManageRestaurant(params) {
   }, [restaurantData]);
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        // justifyContent: "space-between",
+        width: "80%",
+        // height: "100%",
+        gap: "15px",
+        margin: 'auto',
+        overflow: "auto",
+      }}
+    >
       <TextField id="outlined-basic" label="Nom du restaurant" variant="outlined" value={name} onChange={(e) => setName(e.target.value)} />
       <TextField id="outlined-basic" label="Adresse" variant="outlined" value={address} onChange={(e) => setAddress(e.target.value)} />
       <TextField id="outlined-basic" label="Ville" variant="outlined" value={city} onChange={(e) => setCity(e.target.value)} />
@@ -124,8 +135,8 @@ export default function ManageRestaurant(params) {
           label="Type de cuisine"
           onChange={(e) => {
             // setSelectedType([...selectedType, e.target.value]);
-            if(selectedType.indexOf(e.target.value) > -1) {
-              setSelectedType(selectedType.filter((type) => type !== e.target.value))
+            if (selectedType.indexOf(e.target.value) > -1) {
+              setSelectedType(selectedType.filter((type) => type !== e.target.value));
             } else {
               setSelectedType([...selectedType, e.target.value]);
             }
