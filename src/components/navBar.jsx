@@ -1,12 +1,13 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../context/userContext";
 import { AppRouterProvider } from "../context/router";
-import PersonIcon from "@mui/icons-material/Person";
 import LogoutIcon from "@mui/icons-material/Logout";
+// import { useNavigate } from "react-router-dom";
 
 function NavBar() {
   const router = AppRouterProvider();
   const { isAuthenticated, logout } = useContext(UserContext);
+  // const navigate = useNavigate();
 
   return (
     <div
@@ -27,12 +28,13 @@ function NavBar() {
           gap: "10px",
         }}
       >
-        <button onClick={() => (window.location.href = "/")}>Home</button>
+        {/* <button onClick={() => (window.location.href = "/")}>Home</button> */}
         {/* <button onClick={() => (window.location.href = "/products")}>Products</button> */}
         {isAuthenticated ? (
           <div>
-            <PersonIcon />
-            <LogoutIcon onClick={logout} />
+            <LogoutIcon
+              onClick={logout}
+            />
           </div>
         ) : (
           <div>

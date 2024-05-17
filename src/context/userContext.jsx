@@ -28,6 +28,7 @@ export const UserContextProvider = ({ children }) => {
     localStorage.removeItem("token");
     setUser(null);
     setIsAuthenticated(false);
+    window.location.href = "/";
   };
 
   return <UserContext.Provider value={{ user, isAuthenticated, login, logout }}>{children}</UserContext.Provider>;

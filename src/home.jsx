@@ -4,6 +4,7 @@ import { UserContext } from "./context/userContext";
 import ClientHome from "./components/index/clientHome";
 import ManagerHome from "./components/index/managerHome";
 import AdminHome from "./components/index/adminHome";
+import VisitorHome from "./components/index/visitorHome";
 
 export default function Home() {
 
@@ -12,7 +13,12 @@ export default function Home() {
   const { user } = useContext(UserContext);
 
   useEffect(() => {
-    setUserRole(user?.role);
+    if(user?.role){
+      setUserRole(user.role);
+    }
+    else {
+      setUserRole("visitor");
+    }
   }, [user]);
 
   return (
@@ -25,6 +31,7 @@ export default function Home() {
       overflow: "auto",
     }}
     >
+      {userRole == "visitor" && <VisitorHome />}
       {userRole == "client" && <ClientHome />}
       {userRole == "proprietaire" && <ManagerHome />}
       {userRole == "admin" && <AdminHome />}

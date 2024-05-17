@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import { Button, TextField } from "@mui/material";
 import { dbLogin } from "../api/database.jsx";
 import { UserContext } from "../context/userContext";
+import { useNavigate } from "react-router-dom";
 
 function UserLogin() {
 
@@ -10,6 +11,7 @@ function UserLogin() {
   const [password, setPassword] = React.useState("");
   const [message, setMessage] = React.useState("");
   const { login } = React.useContext(UserContext);
+  const navigate = useNavigate();
 
   async function handleLogin() {
     const userData = new FormData();
@@ -20,6 +22,7 @@ function UserLogin() {
     setMessage(request.message);
     if (request.success === true) {
       login(request.user, request.token);
+      navigate("/")
     }
   }
 
